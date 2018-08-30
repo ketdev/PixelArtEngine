@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\CsharpVoxReader\Chunk.cs" Link="Chunk.cs" />
+    <Compile Include="..\CsharpVoxReader\Chunks\Main.cs" Link="Main.cs" />
+    <Compile Include="..\CsharpVoxReader\Chunks\MaterialOld.cs" Link="MaterialOld.cs" />
+    <Compile Include="..\CsharpVoxReader\Chunks\Model.cs" Link="Model.cs" />
+    <Compile Include="..\CsharpVoxReader\Chunks\Pack.cs" Link="Pack.cs" />
+    <Compile Include="..\CsharpVoxReader\Chunks\Palette.cs" Link="Palette.cs" />
+    <Compile Include="..\CsharpVoxReader\Chunks\Size.cs" Link="Size.cs" />
+    <Compile Include="..\CsharpVoxReader\Chunks\Unknown.cs" Link="Unknown.cs" />
+    <Compile Include="..\CsharpVoxReader\Extensions.cs" Link="Extensions.cs" />
+    <Compile Include="..\CsharpVoxReader\IVoxLoader.cs" Link="IVoxLoader.cs" />
+    <Compile Include="..\CsharpVoxReader\VoxReader.cs" Link="VoxReader.cs" />
+  </ItemGroup>
+
+</Project>

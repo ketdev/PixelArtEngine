@@ -1,4 +1,4 @@
-﻿using Stealth.Platform;
+﻿using Stealth.Kernel;
 using System;
 
 namespace Stealth {
@@ -8,7 +8,7 @@ namespace Stealth {
         
         [STAThread]
         static void Main() {
-            using (var game = new Engine(SCREEN_WIDTH, SCREEN_HEIGHT))
+            using (var game = new GameEngine(SCREEN_WIDTH, SCREEN_HEIGHT))
                 game.Run();
         }
     }

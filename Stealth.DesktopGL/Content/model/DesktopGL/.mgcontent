@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>DesktopGL</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/grass.jpg</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/PlayerJump.wav</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/Arial.spritefont</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/tile_grass1.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/Katt.fbx</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/Bod-Text.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/Katt-Text.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/Faces/KFr.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/images/acce_swimsuit.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/images/base_00.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/images/body_swimsuit.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/images/brow_00.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/images/eyelid_00.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/images/face_c.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/images/hair_c.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/images/hair_s.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/images/mouth_00.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/images/pupil_00.png</File>
+    <File>C:/Xhi/dev/project/Stealth/Stealth.DesktopGL/Content/obj/Vert.DAE</File>
+  </SourceFiles>
+</SourceFileCollection>

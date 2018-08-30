@@ -4,10 +4,10 @@ using Android.OS;
 using Android.Util;
 using Android.Views;
 using Microsoft.Xna.Framework;
-using Stealth.Platform;
+using Stealth.Kernel;
 
 namespace Stealth {
-    [Activity(Label = Core.Title,
+    [Activity(Label = Settings.Title,
         MainLauncher = true,
         Icon = "@drawable/icon",
         Theme = "@style/Theme.Splash",
@@ -27,7 +27,7 @@ namespace Stealth {
             DisplayMetrics dm = new DisplayMetrics();
             WindowManager.DefaultDisplay.GetMetrics(dm);
 
-            var g = new Engine(dm.WidthPixels, dm.HeightPixels);
+            var g = new GameEngine(dm.WidthPixels, dm.HeightPixels);
             SetContentView((View)g.Services.GetService(typeof(View)));
             g.Run();
         }
