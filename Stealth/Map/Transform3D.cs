@@ -67,6 +67,6 @@ namespace Stealth.Map {
             result.M44 = 1.0f;
             return result;
         }
-        
+
     }    
 }

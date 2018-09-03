@@ -7,15 +7,21 @@ using SkinnedModel;
 namespace Stealth.Map {
     class Unit : IComponent {
         public Model Model { get; set; }
+        public Texture2D Texture { get; set; }
+        public Color Border { get; set; }
         public AnimationPlayer Animation { get; set; }
     }
     
     static class UnitLoader {
         public static Unit LoadModel(this ContentManager cm, string modelPath, string texturePath, string clipName = null) {
             var unit = new Unit {
-                Model = cm.Load<Model>(modelPath)
+                Model = cm.Load<Model>(modelPath),
             };
-            var tex = cm.Load<Texture2D>(texturePath);
+            Texture2D tex = null;
+            if (texturePath != null) {
+                tex = cm.Load<Texture2D>(texturePath);
+                unit.Texture = tex;
+            }
             foreach (var mesh in unit.Model.Meshes) {
                 foreach (var effect in mesh.Effects) {
 

@@ -55,7 +55,7 @@ namespace Stealth.Scenario {
             // shared camera object
             var camera = new Camera {
                 Transform = new Transform3D {
-                    Position = new Vector3(0, -10, 10),
+                    Position = new Vector3(0, -8, 8),
                     LookAt = Vector3.Zero,
                     Upward = Vector3.UnitZ
                 },
@@ -64,13 +64,13 @@ namespace Stealth.Scenario {
                     (float)graphicsManager.PreferredBackBufferHeight,
                     FieldOfView = MathHelper.PiOver4,
                     NearClipPlane = 0.1f,
-                    FarClipPlane = 10000
+                    FarClipPlane = 1000
                 }
             };
-
+            
             // map grid
             var grid = EntityWorld.CreateEntity();
-            var gridSize = new Vector2(19,13);
+            var gridSize = new Vector2(15,10);
             var lines = new List<VertexPosition>();
             for (int i = 0; i <= gridSize.Y; i++) {
                 lines.Add(new VertexPosition { Position = new Vector3(0, i, 0) });
@@ -106,10 +106,25 @@ namespace Stealth.Scenario {
             var palette = "map\\obj\\palette";
             var grass1Tile = contentManager.LoadModel("map\\tile\\grass1", palette);
             var grass2Tile = contentManager.LoadModel("map\\tile\\grass2", palette);
+            grass2Tile.Border = grass1Tile.Border = new Color(0x49, 0x93, 0x24);
+            
             var cursorTile = contentManager.LoadModel("map\\tile\\cursor", palette, "Cursor|Hover");
+            cursorTile.Border = new Color(0x18, 0x4d, 0xd6);
+            
+            var shelfTile = contentManager.LoadModel("map\\obj\\shelf_bench", "map\\obj\\shelf_bench_tex");
+            shelfTile.Border = new Color(0x6b,0x2b,0x13);
+            
 
-
-            var shelfTile = contentManager.LoadModel("map\\obj\\shelf", palette);
+            var cursor = EntityWorld.CreateEntity();
+            cursor.AddComponent(cursorTile);
+            cursor.AddComponent(new Transform3D { Position = new Vector3(9, 6, 2* Voxel) });
+            cursor.AddComponent(camera); // use shared camera
+            cursor.AddComponent(new Cursor());
+            
+            var shelfObj = EntityWorld.CreateEntity();
+            shelfObj.AddComponent(shelfTile);
+            shelfObj.AddComponent(new Transform3D { Position = new Vector3(3, 3, 0 * Voxel) });
+            shelfObj.AddComponent(camera); // use shared camera
 
 
             var rand = new Random();
@@ -118,36 +133,13 @@ namespace Stealth.Scenario {
                     var entity = EntityWorld.CreateEntity();
                     var tile = (rand.Next() % 2 == 0) ? grass1Tile : grass2Tile;
                     var xRot = (rand.Next() % 3) - 1;
-                    var yRot = (rand.Next() % 2)*2 - 1;
+                    var yRot = (rand.Next() % 2) * 2 - 1;
 
-                    //entity.AddComponent(tile);
-                    //entity.AddComponent(new Transform3D { Position = new Vector3(x, y, 0), Forward = new Vector3(xRot, xRot == 0 ? yRot : 0, 0) });
-                    //entity.AddComponent(camera); // use shared camera
+                    entity.AddComponent(tile);
+                    entity.AddComponent(new Transform3D { Position = new Vector3(x, y, 0), Forward = new Vector3(xRot, xRot == 0 ? yRot : 0, 0) });
+                    entity.AddComponent(camera); // use shared camera
                 }
             }
-                        
-            var tile1 = EntityWorld.CreateEntity();
-            tile1.AddComponent(grass2Tile);
-            tile1.AddComponent(new Transform3D { Position = new Vector3(1, 1, 0) });
-            tile1.AddComponent(camera); // use shared camera
-            
-            var tile2 = EntityWorld.CreateEntity();
-            tile2.AddComponent(grass1Tile);
-            tile2.AddComponent(new Transform3D { Position = new Vector3(2, 1, 0) });
-            tile2.AddComponent(camera); // use shared camera
-            
-
-            var cursor = EntityWorld.CreateEntity();
-            cursor.AddComponent(cursorTile);
-            cursor.AddComponent(new Transform3D { Position = new Vector3(9, 6, 2* Voxel) });
-            cursor.AddComponent(camera); // use shared camera
-            cursor.AddComponent(new Cursor());
-
-
-            var shelfObj = EntityWorld.CreateEntity();
-            shelfObj.AddComponent(shelfTile);
-            shelfObj.AddComponent(new Transform3D { Position = new Vector3(3, 3, 0 * Voxel) });
-            shelfObj.AddComponent(camera); // use shared camera
 
             //// Create animated fox entity
             //var item2 = EntityWorld.CreateEntity();
