@@ -10,10 +10,11 @@ using Stealth.Kernel;
 namespace Stealth.Map.Render {   
     [ArtemisEntitySystem(
         GameLoopType = GameLoopType.Draw,
-        Layer = (int)Settings.PriorityLayer.Map)]
+        Layer = (int)Settings.PriorityLayer.Overlay)]
     class GeometryRender : EntityProcessingSystem {
-        private ContentManager contentManager;
-        private GraphicsDeviceManager graphics;
+        private ContentManager c;
+        private GraphicsDeviceManager g;
+        private RenderData r;
 
         public GeometryRender() : base(
             Aspect.All(typeof(Transform3D), typeof(Camera)).
@@ -25,10 +26,19 @@ namespace Stealth.Map.Render {
                 )) { }
 
         public override void LoadContent() {            
-            contentManager = BlackBoard.GetEntry<ContentManager>(Settings.ContentManager);
-            graphics = BlackBoard.GetEntry<GraphicsDeviceManager>(Settings.GraphicsManager);
+            c = BlackBoard.GetEntry<ContentManager>(Settings.ContentManager);
+            g = BlackBoard.GetEntry<GraphicsDeviceManager>(Settings.GraphicsManager);
+            r = BlackBoard.GetEntry<RenderData>(Settings.RenderData);
         }
 
+        protected override void Begin() {
+            r.SetOutput();
+            g.GraphicsDevice.DepthStencilState = new DepthStencilState() {
+                DepthBufferEnable = true,
+                DepthBufferWriteEnable = true,
+                DepthBufferFunction = CompareFunction.LessEqual
+            };
+        }
         public override void Process(Entity entity) {
             var vp = entity.GetComponent<Geometry<VertexPosition>>();
             var vpc = entity.GetComponent<Geometry<VertexPositionColor>>();
@@ -36,21 +46,20 @@ namespace Stealth.Map.Render {
             var vpnt = entity.GetComponent<Geometry<VertexPositionNormalTexture>>();
             var vpt = entity.GetComponent<Geometry<VertexPositionTexture>>();
             var transform = entity.GetComponent<Transform3D>();
-            var camera = entity.GetComponent<Camera>();            
-            DrawGeometry(vp, transform, camera);
-            DrawGeometry(vpc, transform, camera);
-            DrawGeometry(vpct, transform, camera);
-            DrawGeometry(vpnt, transform, camera);
-            DrawGeometry(vpt, transform, camera);
+            DrawGeometry(vp, transform);
+            DrawGeometry(vpc, transform);
+            DrawGeometry(vpct, transform);
+            DrawGeometry(vpnt, transform);
+            DrawGeometry(vpt, transform);
         }
 
-        private void DrawGeometry<T>(Geometry<T> geometry, Transform3D transform, Camera camera) where T : struct, IVertexType {
+        private void DrawGeometry<T>(Geometry<T> geometry, Transform3D transform) where T : struct, IVertexType {
             if(geometry != null) {
                 // apply matrices
                 if (geometry.Effect is IEffectMatrices effect) {
                     effect.World = transform.WorldMatrix();
-                    effect.View = camera.Transform.ViewMatrix();
-                    effect.Projection = camera.Projection.Matrix();
+                    effect.View = r.Camera.Transform.ViewMatrix();
+                    effect.Projection = r.Camera.Projection.Matrix();
                 }
 
                 // compute number of primitives
@@ -63,7 +72,7 @@ namespace Stealth.Map.Render {
                 // render by passes
                 foreach (var pass in geometry.Effect.CurrentTechnique.Passes) {
                     pass.Apply();
-                    graphics.GraphicsDevice.DrawUserPrimitives(geometry.PrimitiveType, geometry.Vertices, 0, count);
+                    g.GraphicsDevice.DrawUserPrimitives(geometry.PrimitiveType, geometry.Vertices, 0, count);
                 }
             }
         }

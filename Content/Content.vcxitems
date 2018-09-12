@@ -4,6 +4,7 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
     <ItemsProjectGuid>{2e2c3a1a-ff8b-4a24-af60-fee147a75582}</ItemsProjectGuid>
+    <ItemsProjectName>Content</ItemsProjectName>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -14,8 +15,13 @@
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="$(MSBuildThisFileDirectory)border.fx" />
-    <FxCompile Include="$(MSBuildThisFileDirectory)model.fx" />
-    <FxCompile Include="$(MSBuildThisFileDirectory)cel.fx" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)shaders\border.fx" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)shaders\model.fx" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)shaders\shadow.fx" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)shaders\skybox.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Content.Android.mgcb" />
+    <None Include="$(MSBuildThisFileDirectory)Content.DesktopGL.mgcb" />
   </ItemGroup>
 </Project>

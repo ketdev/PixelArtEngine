@@ -12,15 +12,18 @@ namespace Stealth.Scenario.Render {
         GameLoopType = GameLoopType.Draw,
         Layer = (int)Settings.PriorityLayer.Overlay)]
     class StringRender : EntityComponentProcessingSystem<StringSprite, Transform2D> {        
-        private ContentManager contentManager;
+        private ContentManager c;
         private SpriteBatch spriteBatch;
-        
+        private RenderData r;
+
         public override void LoadContent() {
-            contentManager = BlackBoard.GetEntry<ContentManager>(Settings.ContentManager);
-            var graphics = BlackBoard.GetEntry<GraphicsDeviceManager>(Settings.GraphicsManager);
-            spriteBatch = new SpriteBatch(graphics.GraphicsDevice);
+            c = BlackBoard.GetEntry<ContentManager>(Settings.ContentManager);
+            r = BlackBoard.GetEntry<RenderData>(Settings.RenderData);
+            var g = BlackBoard.GetEntry<GraphicsDeviceManager>(Settings.GraphicsManager);
+            spriteBatch = new SpriteBatch(g.GraphicsDevice);
         }
         protected override void Begin() {
+            r.SetOutput();
             spriteBatch.Begin();
         }
         protected override void End() {

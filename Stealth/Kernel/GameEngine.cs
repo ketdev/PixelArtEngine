@@ -1,5 +1,5 @@
 ﻿#if DEBUG
-#define NO_VSYNC
+//#define NO_VSYNC
 #endif
 
 using Artemis;
@@ -14,7 +14,9 @@ namespace Stealth.Kernel {
         // Services
         private GraphicsDeviceManager graphics;
         private EntityWorld entityWorld;
-        
+        private RenderData renderData;
+
+
         public GameEngine(int width, int height) {
             IsMouseVisible = true;
 #if NO_VSYNC
@@ -40,12 +42,17 @@ namespace Stealth.Kernel {
         }
 
         protected override void Initialize() {
+            // Set a higher pixel size for whole scene
+            var pixelSize = 3;
+            renderData = new RenderData( GraphicsDevice, pixelSize );
+
             // initialization after graphics device is available
             entityWorld = new EntityWorld();
             EntitySystem.BlackBoard.SetEntry(Settings.ContentManager, Content);
             EntitySystem.BlackBoard.SetEntry(Settings.GraphicsManager, graphics);
+            EntitySystem.BlackBoard.SetEntry(Settings.RenderData, renderData);
             entityWorld.InitializeAll(System.Reflection.Assembly.GetExecutingAssembly());
-            
+
             // Load component contents
             base.Initialize();            
         }
@@ -54,16 +61,16 @@ namespace Stealth.Kernel {
             // Paused game
             if (!IsActive) return;
             
-            // Update all systems
             entityWorld.Update();
             base.Update(gameTime);
         }
         
         protected override void Draw(GameTime gameTime) {
-            GraphicsDevice.Clear(ClearOptions.Target | ClearOptions.DepthBuffer | ClearOptions.Stencil, default(Color), 1, 0);
+            renderData.Clear();
+            
+            entityWorld.Draw();
 
-            // Draw all systems
-            entityWorld.Draw();            
+            renderData.Display();
             base.Draw(gameTime);
         }
     }

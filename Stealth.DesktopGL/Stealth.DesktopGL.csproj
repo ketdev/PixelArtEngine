@@ -86,7 +86,6 @@
     <EmbeddedResource Include="Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\x86\SDL2.dll">
       <Link>x86\SDL2.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -131,6 +130,9 @@
       <Link>MonoGame.Framework.dll.config</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <MonoGameContentReference Include="..\Content\Content.DesktopGL.mgcb">
+      <Link>Content.DesktopGL.mgcb</Link>
+    </MonoGameContentReference>
     <None Include="app.config" />
     <None Include="app.manifest" />
   </ItemGroup>

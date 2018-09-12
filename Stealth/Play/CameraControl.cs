@@ -13,11 +13,12 @@ namespace Stealth.Play {
     [ArtemisEntitySystem(
         GameLoopType = GameLoopType.Update,
         Layer = (int)Settings.PriorityLayer.GameLogic)]
-    class CameraControl : EntityComponentProcessingSystem<Camera, Cursor, Transform3D> {
+    class CameraControl : EntityComponentProcessingSystem<Cursor, Transform3D> {
 
         private GamePadDPad prevState;
 
-        public override void Process(Entity entity, Camera camera, Cursor cursor, Transform3D transform) {
+        public override void Process(Entity entity, Cursor cursor, Transform3D transform) {
+            var r = BlackBoard.GetEntry<RenderData>(Settings.RenderData);
 
             // Poll for current state
             var gamepad = GamePad.GetState(PlayerIndex.One);
@@ -36,12 +37,18 @@ namespace Stealth.Play {
                 cursorPos.Y += 1;
             if (gamepad.DPad.Down == ButtonState.Released && prevState.Down == ButtonState.Pressed)
                 cursorPos.Y -= 1;
+            if (gamepadCap.HasLeftXThumbStick && gamepadCap.HasLeftYThumbStick) {
+                var d = gamepad.ThumbSticks.Left;
+                cursorPos.X += d.X;
+                cursorPos.Y += d.Y;
+            }
             transform.Position = cursorPos;
             prevState = gamepad.DPad;
 
+
             // orbit camera
             var speed = 0.1f / MathHelper.Pi;
-            var dir = camera.Transform.Position - cursorPos;
+            var dir = r.Camera.Transform.Position - cursorPos;
             if (gamepadCap.HasRightXThumbStick && gamepadCap.HasRightYThumbStick) {
                 var d = gamepad.ThumbSticks.Right * speed;
                 // direction
@@ -51,8 +58,8 @@ namespace Stealth.Play {
                 len -= len * d.Y;
                 dir = Vector3.Normalize(dir) * len;
             }
-            camera.Transform.Position = dir + cursorPos;
-            camera.Transform.LookAt = cursorPos;
+            r.Camera.Transform.Position = dir + cursorPos;
+            r.Camera.Transform.LookAt = cursorPos;
             
         }
     }

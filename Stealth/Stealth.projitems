@@ -9,8 +9,12 @@
     <Import_RootNamespace>Stealth</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Kernel\RenderData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Map\Render\BorderPass.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Map\Render\GeometryRender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Map\Render\ModelRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Map\Render\ShadowRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Map\Render\SkyboxRender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Play\CameraControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Play\Cursor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenario\Render\TextureRender.cs" />
@@ -32,7 +36,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scenario\Transform2D.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Map\Render\" />
     <Folder Include="$(MSBuildThisFileDirectory)Scenario\Render\" />
   </ItemGroup>
 </Project>

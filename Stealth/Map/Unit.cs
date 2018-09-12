@@ -8,7 +8,6 @@ namespace Stealth.Map {
     class Unit : IComponent {
         public Model Model { get; set; }
         public Texture2D Texture { get; set; }
-        public Color Border { get; set; }
         public AnimationPlayer Animation { get; set; }
     }
     

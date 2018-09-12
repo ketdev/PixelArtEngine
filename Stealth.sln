@@ -21,11 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGSkinnedModelPipeline", "d
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MGSkinnedModel", "deps\MGSkinnedModel\MGSkinnedModel.csproj", "{F6CF1BED-659F-4709-AE6D-8077C3CCD6F9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Shaders", "Content\shaders\Shaders.vcxitems", "{2E2C3A1A-FF8B-4A24-AF60-FEE147A75582}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Content", "Content\Content.vcxitems", "{2E2C3A1A-FF8B-4A24-AF60-FEE147A75582}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Content\shaders\Shaders.vcxitems*{2e2c3a1a-ff8b-4a24-af60-fee147a75582}*SharedItemsImports = 9
+		Content\Content.vcxitems*{2e2c3a1a-ff8b-4a24-af60-fee147a75582}*SharedItemsImports = 9
 		Stealth\Stealth.projitems*{4d0b9ab2-7171-48fa-8c1d-32901439c58e}*SharedItemsImports = 4
 		Stealth\Stealth.projitems*{9d6f7abe-8c92-4624-9fcc-bde9d1e0d8f1}*SharedItemsImports = 13
 		Stealth\Stealth.projitems*{ab708da0-f9a6-4a85-9b8d-68619388a219}*SharedItemsImports = 4
