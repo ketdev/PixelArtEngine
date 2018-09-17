@@ -9,6 +9,7 @@
     <Import_RootNamespace>Stealth</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Effects\ModelEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Scene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Posteffect\BorderPass.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Render\GeometryRender.cs" />

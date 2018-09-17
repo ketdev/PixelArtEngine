@@ -137,8 +137,8 @@ namespace Stealth.Scenario {
 
             CreateUnit("map\\decor\\book\\book", "map\\decor\\book\\book_texture", 6, 1, 2, 1, 1);
             
-            CreateUnit("map\\decor\\vase\\vase", "map\\decor\\vase\\vase_texture", 7, 1, 1, 1, 1);
-            CreateShadow("map\\decor\\vase\\vase_shadow", 7, 1, 1, 1, 1);
+            CreateUnit("map\\decor\\vase\\vase", "map\\decor\\vase\\vase_texture", 7, 1, 2, 1, 1);
+            CreateShadow("map\\decor\\vase\\vase_shadow", 7, 1, 2, 1, 1);
 
             var rand = new Random();
             for (int y = 0; y < gridSize.Y; y++) {

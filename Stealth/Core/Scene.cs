@@ -217,7 +217,7 @@ namespace Stealth.Kernel {
             if (texture != null) {
                 effect.Parameters["Texture"].SetValue(texture);
             }
-
+            
             foreach (var mesh in model.Meshes) {
                 foreach (var part in mesh.MeshParts) {
                     // TODO: set bones

@@ -48,6 +48,10 @@ namespace Stealth.Map {
                         skinned.Texture = tex;
                         skinned.DiffuseColor = Vector3.One;
                         skinned.PreferPerPixelLighting = true;
+
+                        var weights = skinned.WeightsPerVertex;
+
+
                     }
                 }
             }
