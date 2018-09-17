@@ -3,11 +3,10 @@ using Artemis.Attributes;
 using Artemis.Manager;
 using Artemis.System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Stealth.Core.Render;
 using Stealth.Kernel;
 using Stealth.Map;
-using Stealth.Map.Render;
 using Stealth.Play;
 using System;
 using System.Collections.Generic;
@@ -17,21 +16,34 @@ namespace Stealth.Scenario {
     [ArtemisEntitySystem(
         GameLoopType = GameLoopType.Update,
         Layer = (int)Settings.PriorityLayer.GameLogic)]
-    class Director : EntityComponentProcessingSystem<Scene> {
-        private ContentManager c;
-        private GraphicsDeviceManager g;
-        private RenderData r;
+    class Director : EntityComponentProcessingSystem<Scenario> {
 
         private void CreateUnit(string model, string texture, int x, int y, int z, int sizeX, int sizeY) {
-            var contentManager = BlackBoard.GetEntry<ContentManager>(Settings.ContentManager);
-            var unit = contentManager.LoadModel(model, texture);
+            var unit = Scene.Current().Content.LoadModel(model, texture);
             var entity = EntityWorld.CreateEntity();
             entity.AddComponent(unit);
             // size offset
             var sizeOffset = new Vector3((float)(sizeX - 1) * 0.5f, (float)(sizeY - 1) * 0.5f, 0);
 
             entity.AddComponent(new Transform3D {
-                Position = new Vector3(x, y, z),
+                Position = new Vector3(x, y, (float)(z) * 0.25f),
+                //Forward = -Vector3.UnitX
+            });
+        }
+
+        private void CreateShadow(string model, int x, int y, int z, int sizeX, int sizeY) {
+            var unit = Scene.Current().Content.LoadModel(model, null);
+            var shadow = new Shadow {
+                Model = unit.Model,
+                Animation = unit.Animation
+            };
+            var entity = EntityWorld.CreateEntity();
+            entity.AddComponent(shadow);
+            // size offset
+            var sizeOffset = new Vector3((float)(sizeX - 1) * 0.5f, (float)(sizeY - 1) * 0.5f, 0);
+
+            entity.AddComponent(new Transform3D {
+                Position = new Vector3(x, y, (float)(z)*0.25f),
                 //Forward = -Vector3.UnitX
             });
         }
@@ -39,22 +51,20 @@ namespace Stealth.Scenario {
         public override void LoadContent() {
             // Set initial scene
             var introScene = EntityWorld.CreateEntity();
-            introScene.AddComponent(new Scene {
+            introScene.AddComponent(new Scenario {
                 Name = "Intro",
                 Background = Color.DodgerBlue
             });
-
-            c = BlackBoard.GetEntry<ContentManager>(Settings.ContentManager);
-            g = BlackBoard.GetEntry<GraphicsDeviceManager>(Settings.GraphicsManager);
-            r = BlackBoard.GetEntry<RenderData>(Settings.RenderData);
-            var font = c.Load<SpriteFont>("Arial");
-            var texture = c.Load<Texture2D>("tile_grass1");
+            
+            var scene = Scene.Current();
+            var font = scene.Content.Load<SpriteFont>("Arial");
+            var texture = scene.Content.Load<Texture2D>("tile_grass1");
             
             introScene.AddComponent(new StringSprite {
                 spriteFont = font,
                 color = Color.White,
                 effects = SpriteEffects.None,
-                text = introScene.GetComponent<Scene>().Name
+                text = introScene.GetComponent<Scenario>().Name
             });
             introScene.AddComponent(new TextureSprite {
                 texture = texture,
@@ -86,7 +96,7 @@ namespace Stealth.Scenario {
             }
             grid.AddComponent(new Geometry<VertexPosition> {
                 Vertices = lines.ToArray(),
-                Effect = new BasicEffect(g.GraphicsDevice) {
+                Effect = new BasicEffect(scene.GraphicsDevice) {
                     DiffuseColor = new Vector3(0.3f),
                 },
                 PrimitiveType = PrimitiveType.LineList
@@ -96,8 +106,8 @@ namespace Stealth.Scenario {
             });
 
             // shared camera object
-            r.Camera.Transform.Position = new Vector3(0, -12, 12);
-            r.Camera.Transform.LookAt = new Vector3(gridSize.X / 2, gridSize.Y / 2, 0);
+            scene.Camera.Transform.Position = new Vector3(0, -12, 12);
+            scene.Camera.Transform.LookAt = new Vector3(gridSize.X / 2, gridSize.Y / 2, 0);
 
 
             // Input:
@@ -107,9 +117,9 @@ namespace Stealth.Scenario {
 
             // Create some tiles
             var palette = "map\\obj\\palette";
-            var grass1Tile = c.LoadModel("map\\tile\\grass1", palette);
-            var grass2Tile = c.LoadModel("map\\tile\\grass2", palette);            
-            var cursorTile = c.LoadModel("map\\tile\\cursor", palette, "Cursor|Hover");            
+            var grass1Tile = scene.Content.LoadModel("map\\tile\\grass1", palette);
+            var grass2Tile = scene.Content.LoadModel("map\\tile\\grass2", palette);            
+            var cursorTile = scene.Content.LoadModel("map\\tile\\cursor", palette, "Cursor|Hover");            
 
 
             var cursor = EntityWorld.CreateEntity();
@@ -118,14 +128,17 @@ namespace Stealth.Scenario {
             cursor.AddComponent(new Cursor());
                         
 
-            CreateUnit("map\\obj\\bench_2x1x2", "map\\obj\\bench_2x1x2_tex", 4, 1, 0, 2, 1);
-            CreateUnit("map\\obj\\bookshelf_2x1x2\\model", "map\\obj\\bookshelf_2x1x2\\texture", 6, 2, 0, 2, 1);
+            CreateUnit("map\\obj\\bench_2x1x2", "map\\obj\\bench_2x1x2_tex", 4, 1, 1, 2, 1);
+            CreateUnit("map\\obj\\bookshelf_2x1x2\\model", "map\\obj\\bookshelf_2x1x2\\texture", 6, 2, 1, 2, 1);
 
             CreateUnit("map\\obj\\tile_floor\\model", "map\\obj\\tile_floor\\texture", 1, 1, 0, 1, 1);
             CreateUnit("map\\obj\\tile_floor\\model", "map\\obj\\tile_floor\\texture", 2, 3, 0, 1, 1);
             CreateUnit("map\\obj\\tile_floor\\model", "map\\obj\\tile_floor\\texture", 2, 4, 0, 1, 1);
 
-            CreateUnit("map\\decor\\book\\book", "map\\decor\\book\\book_Texture", 6, 1, 1, 1, 1);
+            CreateUnit("map\\decor\\book\\book", "map\\decor\\book\\book_texture", 6, 1, 2, 1, 1);
+            
+            CreateUnit("map\\decor\\vase\\vase", "map\\decor\\vase\\vase_texture", 7, 1, 1, 1, 1);
+            CreateShadow("map\\decor\\vase\\vase_shadow", 7, 1, 1, 1, 1);
 
             var rand = new Random();
             for (int y = 0; y < gridSize.Y; y++) {
@@ -136,16 +149,15 @@ namespace Stealth.Scenario {
                     var yRot = (rand.Next() % 2) * 2 - 1;
                     //entity.AddComponent(tile);
                     //entity.AddComponent(new Transform3D { Position = new Vector3(x, y, 0), Forward = new Vector3(xRot, xRot == 0 ? yRot : 0, 0) });
-
-
-                    CreateUnit("map\\obj\\tile_floor\\model", "map\\obj\\tile_floor\\texture", x, y, 0, 1, 1);
+                    
+                    //CreateUnit("map\\obj\\tile_floor\\model", "map\\obj\\tile_floor\\texture", x, y, 0, 1, 1);
                 }
             }
 
             // Add skybox
             var skybox = EntityWorld.CreateEntity();
             skybox.AddComponent(new Skybox {
-                Texture = c.Load<Texture2D>("map\\skybox\\skybox")
+                Texture = scene.Content.Load<Texture2D>("map\\skybox\\skybox")
             });
             
 
@@ -162,7 +174,7 @@ namespace Stealth.Scenario {
 
         }
 
-        public override void Process(Entity entity, Scene scene) {
+        public override void Process(Entity entity, Scenario scene) {
             //Debug.WriteLine($"Scene: {scene.Name}");
         }
     }

@@ -10,7 +10,11 @@ namespace Stealth.Map {
         public Texture2D Texture { get; set; }
         public AnimationPlayer Animation { get; set; }
     }
-    
+    class Shadow : IComponent {
+        public Model Model { get; set; }
+        public AnimationPlayer Animation { get; set; }
+    }
+
     static class UnitLoader {
         public static Unit LoadModel(this ContentManager cm, string modelPath, string texturePath, string clipName = null) {
             var unit = new Unit {

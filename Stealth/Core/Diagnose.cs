@@ -1,10 +1,6 @@
 ﻿using Artemis.Attributes;
-using Artemis.Interface;
 using Artemis.Manager;
 using Artemis.System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Input.Touch;
 using System;
 using System.Diagnostics;
 

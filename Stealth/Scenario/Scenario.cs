@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace Stealth.Scenario {
-    struct Scene : IComponent {
+    struct Scenario : IComponent {
         public String Name { get; set; }
         public Color Background { get; set; }
     }

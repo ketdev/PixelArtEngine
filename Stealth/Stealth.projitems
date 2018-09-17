@@ -9,26 +9,27 @@
     <Import_RootNamespace>Stealth</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Kernel\RenderData.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Map\Render\BorderPass.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Map\Render\GeometryRender.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Map\Render\ModelRender.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Map\Render\ShadowRender.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Map\Render\SkyboxRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Posteffect\BorderPass.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Render\GeometryRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Render\ModelRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Posteffect\ShadowVolumePass.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Render\ShadowVolumeRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Render\SkyboxRender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Play\CameraControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Play\Cursor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenario\Render\TextureRender.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Kernel\Settings.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Kernel\Diagnose.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Kernel\GameEngine.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Kernel\InputListener.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Settings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Diagnose.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\GameEngine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\InputListener.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenario\Render\StringRender.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Map\Geometry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Map\Projection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Map\Unit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Map\Camera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenario\Director.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenario\Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenario\Scenario.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenario\Set\TitleScreen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Map\Transform3D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenario\StringSprite.cs" />
@@ -36,6 +37,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Scenario\Transform2D.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Core\Posteffect\" />
     <Folder Include="$(MSBuildThisFileDirectory)Scenario\Render\" />
   </ItemGroup>
 </Project>

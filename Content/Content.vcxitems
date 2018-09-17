@@ -18,6 +18,7 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)shaders\border.fx" />
     <FxCompile Include="$(MSBuildThisFileDirectory)shaders\model.fx" />
     <FxCompile Include="$(MSBuildThisFileDirectory)shaders\shadow.fx" />
+    <FxCompile Include="$(MSBuildThisFileDirectory)shaders\shadow_pass.fx" />
     <FxCompile Include="$(MSBuildThisFileDirectory)shaders\skybox.fx" />
   </ItemGroup>
   <ItemGroup>

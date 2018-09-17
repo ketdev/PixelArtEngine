@@ -37,6 +37,7 @@ struct VS2PS {
 	float2 TexCoord : TEXCOORD0;
 };
 
+// Shaders
 VS2PS MainVS(App2VS input) {
 	VS2PS output;
 	output.Position = input.Position;
@@ -44,7 +45,6 @@ VS2PS MainVS(App2VS input) {
 	return output;
 }
 
-// Shaders
 float4 MainPS(VS2PS input) : COLOR {
 	float4 color = float4(0,0,0,0);
 

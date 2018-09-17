@@ -13,10 +13,8 @@ namespace Stealth.Kernel {
         
         // Services
         private GraphicsDeviceManager graphics;
-        private EntityWorld entityWorld;
-        private RenderData renderData;
-
-
+        private Scene scene;
+        
         public GameEngine(int width, int height) {
             IsMouseVisible = true;
 #if NO_VSYNC
@@ -42,35 +40,20 @@ namespace Stealth.Kernel {
         }
 
         protected override void Initialize() {
-            // Set a higher pixel size for whole scene
-            var pixelSize = 3;
-            renderData = new RenderData( GraphicsDevice, pixelSize );
-
             // initialization after graphics device is available
-            entityWorld = new EntityWorld();
-            EntitySystem.BlackBoard.SetEntry(Settings.ContentManager, Content);
-            EntitySystem.BlackBoard.SetEntry(Settings.GraphicsManager, graphics);
-            EntitySystem.BlackBoard.SetEntry(Settings.RenderData, renderData);
-            entityWorld.InitializeAll(System.Reflection.Assembly.GetExecutingAssembly());
-
-            // Load component contents
-            base.Initialize();            
+            scene = new Scene(graphics, Content);
+            base.Initialize();
         }
         
         protected override void Update(GameTime gameTime) {
             // Paused game
-            if (!IsActive) return;
-            
-            entityWorld.Update();
+            if (!IsActive) return;            
+            scene.Update();
             base.Update(gameTime);
         }
         
-        protected override void Draw(GameTime gameTime) {
-            renderData.Clear();
-            
-            entityWorld.Draw();
-
-            renderData.Display();
+        protected override void Draw(GameTime gameTime) {            
+            scene.Draw();
             base.Draw(gameTime);
         }
     }

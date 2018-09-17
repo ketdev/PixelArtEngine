@@ -13,18 +13,15 @@ namespace Stealth.Scenario.Render {
         GameLoopType = GameLoopType.Draw,
         Layer = (int)Settings.PriorityLayer.Overlay)]
     class TextureRender : EntityComponentProcessingSystem<TextureSprite, Transform2D> {
-        private ContentManager c;
         private SpriteBatch spriteBatch;
-        private RenderData r;
+        private Scene scene;
 
         public override void LoadContent() {
-            c = BlackBoard.GetEntry<ContentManager>(Settings.ContentManager);
-            r = BlackBoard.GetEntry<RenderData>(Settings.RenderData);
-            var g = BlackBoard.GetEntry<GraphicsDeviceManager>(Settings.GraphicsManager);
-            spriteBatch = new SpriteBatch(g.GraphicsDevice);
+            scene = Scene.Current();
+            spriteBatch = new SpriteBatch(scene.GraphicsDevice);
         }
         protected override void Begin() {
-            r.SetOutput();
+            scene.SetOutput();
             spriteBatch.Begin();
         }
         protected override void End() {

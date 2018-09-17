@@ -18,7 +18,7 @@ namespace Stealth.Play {
         private GamePadDPad prevState;
 
         public override void Process(Entity entity, Cursor cursor, Transform3D transform) {
-            var r = BlackBoard.GetEntry<RenderData>(Settings.RenderData);
+            var scene = Scene.Current();
 
             // Poll for current state
             var gamepad = GamePad.GetState(PlayerIndex.One);
@@ -48,7 +48,7 @@ namespace Stealth.Play {
 
             // orbit camera
             var speed = 0.1f / MathHelper.Pi;
-            var dir = r.Camera.Transform.Position - cursorPos;
+            var dir = scene.Camera.Transform.Position - cursorPos;
             if (gamepadCap.HasRightXThumbStick && gamepadCap.HasRightYThumbStick) {
                 var d = gamepad.ThumbSticks.Right * speed;
                 // direction
@@ -58,8 +58,8 @@ namespace Stealth.Play {
                 len -= len * d.Y;
                 dir = Vector3.Normalize(dir) * len;
             }
-            r.Camera.Transform.Position = dir + cursorPos;
-            r.Camera.Transform.LookAt = cursorPos;
+            scene.Camera.Transform.Position = dir + cursorPos;
+            scene.Camera.Transform.LookAt = cursorPos;
             
         }
     }

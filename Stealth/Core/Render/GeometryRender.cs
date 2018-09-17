@@ -2,22 +2,20 @@
 using Artemis.Attributes;
 using Artemis.Manager;
 using Artemis.System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Stealth.Kernel;
+using Stealth.Map;
 
-namespace Stealth.Map.Render {   
+namespace Stealth.Core.Render {
+
     [ArtemisEntitySystem(
         GameLoopType = GameLoopType.Draw,
         Layer = (int)Settings.PriorityLayer.Overlay)]
     class GeometryRender : EntityProcessingSystem {
-        private ContentManager c;
-        private GraphicsDeviceManager g;
-        private RenderData r;
+        private Scene scene;
 
         public GeometryRender() : base(
-            Aspect.All(typeof(Transform3D), typeof(Camera)).
+            Aspect.All(typeof(Transform3D)).
             GetOne(typeof(Geometry<VertexPosition>), 
                 typeof(Geometry<VertexPositionColor>), 
                 typeof(Geometry<VertexPositionColorTexture>), 
@@ -25,19 +23,12 @@ namespace Stealth.Map.Render {
                 typeof(Geometry<VertexPositionTexture>)
                 )) { }
 
-        public override void LoadContent() {            
-            c = BlackBoard.GetEntry<ContentManager>(Settings.ContentManager);
-            g = BlackBoard.GetEntry<GraphicsDeviceManager>(Settings.GraphicsManager);
-            r = BlackBoard.GetEntry<RenderData>(Settings.RenderData);
+        public override void LoadContent() {
+            scene = Scene.Current();
         }
 
         protected override void Begin() {
-            r.SetOutput();
-            g.GraphicsDevice.DepthStencilState = new DepthStencilState() {
-                DepthBufferEnable = true,
-                DepthBufferWriteEnable = true,
-                DepthBufferFunction = CompareFunction.LessEqual
-            };
+            scene.SetOutput();
         }
         public override void Process(Entity entity) {
             var vp = entity.GetComponent<Geometry<VertexPosition>>();
@@ -58,8 +49,8 @@ namespace Stealth.Map.Render {
                 // apply matrices
                 if (geometry.Effect is IEffectMatrices effect) {
                     effect.World = transform.WorldMatrix();
-                    effect.View = r.Camera.Transform.ViewMatrix();
-                    effect.Projection = r.Camera.Projection.Matrix();
+                    effect.View = scene.Camera.Transform.ViewMatrix();
+                    effect.Projection = scene.Camera.Projection.Matrix();
                 }
 
                 // compute number of primitives
@@ -72,7 +63,7 @@ namespace Stealth.Map.Render {
                 // render by passes
                 foreach (var pass in geometry.Effect.CurrentTechnique.Passes) {
                     pass.Apply();
-                    g.GraphicsDevice.DrawUserPrimitives(geometry.PrimitiveType, geometry.Vertices, 0, count);
+                    scene.GraphicsDevice.DrawUserPrimitives(geometry.PrimitiveType, geometry.Vertices, 0, count);
                 }
             }
         }
