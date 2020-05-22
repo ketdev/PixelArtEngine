@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>913f2fe3-7295-4c2f-a132-53d319405d97</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Engine</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Camera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\Geometry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\Model3D.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\Projection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\Skybox.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\StringSprite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\TextureSprite.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\Transform2D.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Component\Transform3D.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Effects\ModelEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Layers.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RenderSystem\BorderPass.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RenderSystem\UIGeometryRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RenderSystem\ModelRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RenderSystem\ShadowVolumePass.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RenderSystem\ShadowVolumeRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RenderSystem\SkyboxRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RenderSystem\UIStringRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RenderSystem\UITextureRender.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scene.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Assets\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Assets\Shaders\border.fx" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\Shaders\model.fx" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\Shaders\shadow_pass.fx" />
+    <None Include="$(MSBuildThisFileDirectory)Assets\Shaders\skybox.fx" />
+  </ItemGroup>
+</Project>

@@ -1,3 +1,0 @@
-[submodule "deps/CsharpVoxReader"]
-	path = deps/CsharpVoxReader
-	url = https://github.com/barraudf/CsharpVoxReader.git
